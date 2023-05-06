@@ -1,0 +1,11 @@
+{
+    "workspace.library": [
+        "/Users/deepak.vermazomato.com/.local/share/nvim/lazy/neodev.nvim/types/stable",
+        "/usr/local/Cellar/neovim/0.9.0/share/nvim/runtime/lua",
+        "/Users/deepak.vermazomato.com/.local/share/nvim/lazy/neodev.nvim/types/stable",
+        "/usr/local/Cellar/neovim/0.9.0/share/nvim/runtime/lua",
+        "/Users/deepak.vermazomato.com/workspace/darcula_dark/lua",
+        "/Users/deepak.vermazomato.com/workspace/darcula_dark/lua",
+        "${3rd}/luv/library"
+    ]
+}
