@@ -25,9 +25,11 @@ local theme = lush(function(injected_functions)
 	local d3 = bg.da(30)
 	local d4 = bg.da(40)
 	local d5 = bg.da(50)
-
+	local tt = hsl("#B189F5")
+	tt = hsl("#66313F")
 	local overbg = c2
 	local subtle = c22
+	local pmenusel = hsl("#b3ae60").da(50).da(20)
 
 	local fg = hsl("#BCBEC4")
 	local mid = c2.lighten(10)
@@ -35,8 +37,8 @@ local theme = lush(function(injected_functions)
 
 	return {
 		Normal({ bg = bg, fg = fg }), -- Normal text
-		NormalFloat({ bg = overbg, fg = fg }), -- Normal text in floating windows.
-		NormalNC({ bg = d1, fg = fg }), -- normal text in non-current windows
+		NormalFloat({ bg = d2, fg = fg }), -- Normal text in floating windows.
+		NormalNC({ bg = bg, fg = fg.da(20) }), -- normal text in non-current windows
 
 		Comment({ fg = hsl("#7A7E85") }), -- Any comment
 		Whitespace({ fg = hsl("#6F737A") }), -- "nbsp", "space", "tab" and "trail" in 'listchars'
@@ -56,16 +58,17 @@ local theme = lush(function(injected_functions)
 		LineNr({ fg = hsl("#4B5059") }), -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 		SignColumn({ LineNr }), -- Column where |signs| are displayed
 		CursorLineNr({ fg = hsl("#A1A3AB"), bg = hsl("#26282E") }), -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
+		CursorLineFold({ fg = hsl("#A1A3AB"), bg = hsl("#26282E") }), -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
 		FoldColumn({ LineNr }), -- 'foldcolumn'
 		Folded({ bg = hsl("#2B2D30"), gui = "italic", fg = hsl("#B3AE60") }), -- Line used for closed folds
 
 		Winseparator({ bg = bg, fg = subtle }), -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
-		VertSplit({ Winseparator }), -- Column separating vertically split windows
+		VertSplit({ bg = bg, fg = subtle }), -- Column separating vertically split windows
 
 		Pmenu({ bg = hsl("#2b2d3a") }), -- Popup menu: Normal item.
-		PmenuSel({ bg = hsl("#434549") }), -- Popup menu: Selected item.
+		PmenuSel({ bg = hsl("#434549").lighten(30) }), -- Popup menu: Selected item.
 		PmenuSbar({ bg = hsl("#3f4043") }), -- Popup menu: Scrollbar.
-		PmenuThumb({ Pmenu }), -- Popup menu: Thumb of the scrollbar.
+		-- PmenuThumb({ Pmenu }), -- Popup menu: Thumb of the scrollbar.
 		WildMenu({ Pmenu }), -- Current match in 'wildmenu' completion
 		QuickFixLine({ fg = c7 }), -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
 
@@ -76,7 +79,8 @@ local theme = lush(function(injected_functions)
 		TabLineFill({ bg = d5 }), -- Tab pages line, where there are no labels
 		TabLineSel({ bg = bg, gui = un }), -- Tab pages line, active tab page label
 
-		Search({ bg = hsl("#114957") }),
+		--Search({ bg = hsl("#114957") }),
+		Search({ bg = hsl("#224855") }),
 		IncSearch({ Search }), -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
 		Substitute({ Search }), -- |:substitute| replacement text highlighting
 
@@ -167,6 +171,8 @@ local theme = lush(function(injected_functions)
 
 		-- See :h lsp-highlight, some groups may not be listed, submit a PR fix to lush-template!
 		--
+
+		LspInlayHint({ fg = c5, bg = c2 }),
 		LspReferenceText({ bg = hsl("#373B39") }), -- Used for highlighting "text" references
 		LspReferenceRead({ bg = hsl("#373B39") }), -- Used for highlighting "read" references
 		LspReferenceWrite({ bg = hsl("#402F33") }), -- Used for highlighting "write" references
@@ -185,9 +191,9 @@ local theme = lush(function(injected_functions)
 		-- DiagnosticVirtualTextInfo  { } , -- Used for "Info" diagnostic virtual text.
 		-- DiagnosticVirtualTextHint  { } , -- Used for "Hint" diagnostic virtual text.
 		DiagnosticUnderlineError({ DiagnosticError, gui = un }), -- Used to underline "Error" diagnostics.
-		DiagnosticUnderlineWarn({ DiagnosticWarn, gui = un }), -- Used to underline "Warn" diagnostics.
-		DiagnosticUnderlineInfo({ DiagnosticInfo, gui = un }), -- Used to underline "Info" diagnostics.
-		DiagnosticUnderlineHint({ DiagnosticHint, gui = un }), -- Used to underline "Hint" diagnostics.
+		DiagnosticUnderlineWarn({ gui = un }), -- Used to underline "Warn" diagnostics.
+		DiagnosticUnderlineInfo({ gui = un }), -- Used to underline "Info" diagnostics.
+		DiagnosticUnderlineHint({ gui = un }), -- Used to underline "Hint" diagnostics.
 		-- DiagnosticFloatingError    { } , -- Used to color "Error" diagnostic messages in diagnostics float. See |vim.diagnostic.open_float()|
 		-- DiagnosticFloatingWarn     { } , -- Used to color "Warn" diagnostic messages in diagnostics float.
 		-- DiagnosticFloatingInfo     { } , -- Used to color "Info" diagnostic messages in diagnostics float.
@@ -197,6 +203,10 @@ local theme = lush(function(injected_functions)
 		-- DiagnosticSignInfo         { } , -- Used for "Info" signs in sign column.
 		-- DiagnosticSignHint         { } , -- Used for "Hint" signs in sign column.
 
+		DiagnosticLineNrError({ fg = hsl("#F75464") }), -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticLineNrWarn({ fg = hsl("#E0BB65") }), -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticLineNrInfo({ fg = hsl("#56A8F5") }), -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticLineNrHint({ fg = hsl("#299999") }), -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
 		-- Tree-Sitter syntax groups.
 		--
 		-- See :h treesitter-highlight-groups, some groups may not be listed,
@@ -325,19 +335,120 @@ local theme = lush(function(injected_functions)
 		sym("@function.call.bash")({ fg = hsl("#CC7832") }),
 		sym("@preproc.bash")({ fg = hsl("#AFBF7E"), gui = "bold" }),
 
-		sym("@field.yaml")({ Statement }),
+		-- CmpItemAbbrDeprecated({ fg = subtle }),
+		-- CmpItemAbbrMatch({ fg = hsl("#8bcada") }),
+		-- CmpItemAbbrMatchFuzzy({ fg = hsl("#8bcada") }),
+		-- CmpItemKindVariable({ fg = hsl("#3264b4") }),
+		-- CmpItemKindInterface({ fg = hsl("#629755") }),
+		-- CmpItemKindText({ fg = hsl("#3264b4") }),
+		-- CmpItemKindFunction({ fg = hsl("#C77DBB") }),
+		-- CmpItemKindMethod({ fg = hsl("#C77DBB") }),
+		-- CmpItemKindProperty({ fg = fg, bg = hsl("#C77DBB") }),
 
 		NeoTreeNormal({ bg = hsl("#2b2d30") }),
 		NeoTreeNormalNC({ NeoTreeNormal }),
 		NeoTreeCursorLine({ bg = hsl("#32436b") }),
 		NeoTreeDirectoryName({ fg = fg }),
+		--  reference https://www.jetbrains.com/help/idea/file-status-highlights.html#86b7a728
+		NeoTreeGitAdded({ fg = hsl("#629755") }),
+		NeoTreeGitUntracked({ fg = hsl("#D1675A") }),
+		NeoTreeGitUnstaged({ fg = hsl("#3264B4") }),
+		NeoTreeGitModified({ fg = hsl("#6897BB") }),
+		NeoTreeGitRenamed({ fg = hsl("#3A8484") }),
+		NeoTreeGitConflict({ fg = hsl("#D5756C") }),
+		NeoTreeGitIgnored({ fg = hsl("#848504") }),
+		NeoTreeGitDeleted({ fg = hsl("#6C6C6C") }),
+		NeoTreeGitStaged({ NeoTreeGitAdded }),
+		NeoTreeFileIcon({ fg = hsl("#8bcada") }),
+		NeoTreeExpander({ fg = fg.da(10) }),
+		NeoTreeDirectoryIcon({ fg = fg }),
+		NeoTreeIndentMarker({ fg = hsl("#3d3f43").lighten(20) }),
+
 		ExtraWhitespace({ bg = hsl("#66313F") }),
 		AlphaHeader({ fg = hsl("#72D6D6") }),
 		AlphaFooter({ fg = "#fe8019" }),
 		AlphaShortcut({ fg = "#d56e6e" }),
+
+		DashboardFindFile({ fg = "#d10567" }),
+		DashboardFindFileI({ fg = "#d10567" }),
+		DashboardNewFile({ fg = "#B189F5" }),
+		DashboardNewFileI({ fg = "#B189F5" }),
+		DashboardRecent({ fg = "#72d6d6" }),
+		DashboardRecentI({ fg = "#72d6d6" }),
+		DashboardText({ fg = "#d5756c" }),
+		DashboardTextI({ fg = "#d5756c" }),
+		DashboardSession({ fg = "#3264b4" }),
+		DashboardSessionI({ fg = "#3264b4" }),
+		DashboardProject({ fg = "#22a272" }),
+		DashboardProjectI({ fg = "#22a272" }),
+		DashboardConfiguration({ fg = "#b09d79" }),
+		DashboardConfigurationI({ fg = "#b09d79" }),
+		DashboardLazy({ fg = "#afbf7e" }),
+		DashboardLazyI({ fg = "#afbf7e" }),
+		DashboardServer({ fg = "#628f5e" }),
+		DashboardServerI({ fg = "#628f5e" }),
+		DashboardQuit({ fg = hsl("#66313f").lighten(20) }),
+		DashboardQuitI({ fg = hsl("#66313f").lighten(20) }),
+		DashboardFooter({ fg = "#fe8019" }),
+		DashboardHeader({ fg = hsl("#72D6D6") }),
+
+		GitSignsChange({ fg = "#3f60a7" }),
+		GitSignsAdd({ fg = "#628f5e" }),
+
+		TelescopeBorder({ fg = fg, bg = tt }),
+		TelescopePromptBorder({ fg = c2, bg = c2 }),
+		TelescopePromptNormal({ fg = fg, bg = c2 }),
+		TelescopePromptPrefix({ fg = tt.lighten(40), bg = c2 }),
+		TelescopeResultsTitle({ fg = fg, bg = tt }),
+		TelescopeResultsBorder({ fg = d3, bg = d2 }),
+		TelescopeResultsNormal({ fg = fg, bg = d2 }),
+		TelescopePreviewBorder({ fg = tt, bg = d3 }),
+		TelescopePreviewNormal({ fg = fg, bg = d3 }),
+
+		WhichKeyFloat({ bg = "#32436b" }),
+		WhichKeyGroup({ fg = "#aaaaaa" }),
+		WhichKeyDesc({ fg = hsl("#32436b").lighten(60) }),
+		WhichKey({ fg = hsl("#b3ae60").da(20) }),
+		EdgyNormal({ bg = bg }),
+		FloatBorder({ bg = d2, fg = pmenusel }), -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
+		FloatCursorLine({ bg = pmenusel }), -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
+		PmenuThumb({ bg = pmenusel.da(20) }), -- Popup menu: Thumb of the scrollbar.
+
+		DapBreakpoint({ fg = hsl("#F75464") }),
+		DapBreakpointCondition({ fg = hsl("#F75464") }),
+		DapBreakpointLine({ bg = hsl("#40252B") }),
+		DapLogPoint({ fg = hsl("#b3ae60") }),
+		DapStopped({ fg = hsl("#2A5091").lighten(20) }),
+		DapStoppedLine({ bg = hsl("#2A5091").da(20) }),
+		DapBreakpointRejected({ fg = hsl("#849FBF") }),
+		ScrollbarHandle({ bg = c3 }),
+		MinimapRangeColor({ fg = hsl("#849FBF"), bg = d2 }),
+		MinimapCursorColor({ fg = hsl("#849FBF"), bg = hsl("#2A5091").da(20) }),
 	}
 end)
 
+-- vim.opt.fillchars:append("vert:▏")
+-- vim.opt.fillchars:append("vertleft:▏")
+-- vim.opt.fillchars:append("vertright:▏")
+-- vim.opt.fillchars:append("verthoriz:─")
+-- vim.opt.fillchars:append("horiz:─")
+-- vim.opt.fillchars:append("horizup:─")
+-- vim.opt.fillchars:append("horizdown:─")
+--  A       󰔴 󰌒 󱦰
+--     --  
+--
+-- vim.api.nvim_create_autocmd('LspTokenUpdate', {
+--   callback = function(args)
+--     local token = args.data.token
+--     if token.type == 'variable' and not token.modifiers.readonly then
+--       vim.lsp.semantic_tokens.highlight_token(
+--         token, args.buf, args.data.client_id, 'MyMutableVariableHighlight'
+--       )
+--     end
+--   end,
+-- })
+
+-- 󰅀 󰅂 󰅃
 -- Return our parsed theme for extension or use elsewhere.
 return theme
 
