@@ -65,7 +65,7 @@ local theme = lush(function(injected_functions)
 		Winseparator({ bg = bg, fg = subtle }), -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
 		VertSplit({ bg = bg, fg = subtle }), -- Column separating vertically split windows
 
-		Pmenu({ bg = hsl("#2b2d3a") }), -- Popup menu: Normal item.
+		Pmenu({ bg = hsl("#2B2D3A") }), -- Popup menu: Normal item.
 		PmenuSel({ bg = hsl("#434549").lighten(30) }), -- Popup menu: Selected item.
 		PmenuSbar({ bg = hsl("#3f4043") }), -- Popup menu: Scrollbar.
 		-- PmenuThumb({ Pmenu }), -- Popup menu: Thumb of the scrollbar.
@@ -102,10 +102,10 @@ local theme = lush(function(injected_functions)
 		Directory({ fg = hsl("#467FF2") }), -- Directory names (and other special names in listings)
 		Title({ fg = hsl("#B189F5") }), -- Titles for output from ":set all", ":autocmd" etc.
 
-		DiffAdd({ fg = hsl("#294436").lighten(40), bg = bg }), -- Diff mode: Added line |diff.txt|
-		DiffChange({ fg = hsl("#385570").lighten(30) }), -- Diff mode: Changed line |diff.txt|
+		DiffAdd({ bg = hsl("#294436") }), -- Diff mode: Added line |diff.txt|
+		DiffChange({ bg = hsl("#2a3540") }), -- Diff mode: Changed line |diff.txt|
 		DiffDelete({ fg = hsl("#8F5247") }), -- Diff mode: Deleted line |diff.txt|
-		DiffText({ DiffChange, gui = un }), -- Diff mode: Changed text within a changed line |diff.txt|
+		DiffText({ bg = hsl("#385570") }), -- Diff mode: Changed text within a changed line |diff.txt|
 
 		SpellBad({ guisp = hsl("#7EC482"), gui = "undercurl" }), -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
 		SpellCap({ guisp = hsl("#CF514E"), gui = "undercurl" }), -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
