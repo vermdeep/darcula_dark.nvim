@@ -424,6 +424,10 @@ local theme = lush(function(injected_functions)
 		ScrollbarHandle({ bg = c3 }),
 		MinimapRangeColor({ fg = hsl("#849FBF"), bg = d2 }),
 		MinimapCursorColor({ fg = hsl("#849FBF"), bg = hsl("#2A5091").da(20) }),
+
+		DropBarMenuCurrentContext({ bg = "#3d454b" }),
+		DropBarMenuHoverEntry({ bg = "#2A5091" }),
+		DropBarMenuHoverIcon({ DropBarMenuHoverEntry }),
 	}
 end)
 
