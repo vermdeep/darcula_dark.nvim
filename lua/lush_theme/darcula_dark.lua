@@ -45,7 +45,7 @@ local theme = lush(function(injected_functions)
 		Conceal({ fg = hsl(0, 0, 25) }), -- Placeholder characters substituted for concealed text (see 'conceallevel')
 		-- NonText { fg = c5 },                                                 -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
 		-- SpecialKey { Whitespace },                                           -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
-		NonText({ fg = hsl("#313438").lighten(20) }), -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
+		NonText({ fg = hsl("#313438") }), -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
 		SpecialKey({ fg = hsl("#313438").lighten(20) }), -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
 
 		ColorColumn({ bg = overbg }), -- Columns set with 'colorcolumn'
@@ -57,7 +57,7 @@ local theme = lush(function(injected_functions)
 
 		LineNr({ fg = hsl("#4B5059") }), -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 		SignColumn({ LineNr }), -- Column where |signs| are displayed
-		CursorLineNr({ fg = hsl("#A1A3AB"), bg = hsl("#26282E") }), -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
+		CursorLineNr({ fg = hsl("#B3AE60"), bg = hsl("#26282E") }), -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
 		CursorLineFold({ fg = hsl("#A1A3AB"), bg = hsl("#26282E") }), -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
 		FoldColumn({ LineNr }), -- 'foldcolumn'
 		Folded({ bg = hsl("#2B2D30"), gui = "italic", fg = hsl("#B3AE60") }), -- Line used for closed folds
@@ -172,7 +172,7 @@ local theme = lush(function(injected_functions)
 		-- See :h lsp-highlight, some groups may not be listed, submit a PR fix to lush-template!
 		--
 
-		LspInlayHint({ fg = c5, bg = c2 }),
+		LspInlayHint({ fg = c3 }),
 		LspReferenceText({ bg = hsl("#373B39") }), -- Used for highlighting "text" references
 		LspReferenceRead({ bg = hsl("#373B39") }), -- Used for highlighting "read" references
 		LspReferenceWrite({ bg = hsl("#402F33") }), -- Used for highlighting "write" references
@@ -316,12 +316,22 @@ local theme = lush(function(injected_functions)
 		sym("@lsp.type.function.go")({ fg = hsl("#B09D79") }),
 		sym("@lsp.typemod.function.definition.go")({ Function }),
 		sym("@lsp.typemod.parameter.definition.go")({ fg = fg.lighten(50) }),
+		sym("@lsp.typemod.method.definition.go")({ Function }),
 		sym("@lsp.type.parameter.go")({ fg = fg.lighten(50) }),
-		sym("@lsp.typemod.variable.readonly.go")({ Constant, gui = "italic" }),
-		sym("@lsp.mod.readonly.go")({ Constant, gui = it }),
-		sym("@lsp.mod.defaultLibrary.go")({ fg = hsl("#CC7832") }),
 		sym("@string.regex.go")({ bg = hsl("#2d3c3f") }),
 		sym("@lsp.typemod.type.definition.go")({ Identifier }),
+		sym("@lsp.type.string.go")({}),
+		sym("@lsp.type.method.go")({ fg = hsl("#B09D79") }),
+
+		sym("@lsp.mod.readonly.go")({ Constant, gui = it }),
+		-- sym("@lsp.typemod.variable.readonly.go")({ Constant, gui = "italic" }),
+		sym("@lsp.typemod.variable.defaultLibrary.go")({ fg = hsl("#CC7832"), gui = "NONE" }),
+		sym("@lsp.mod.defaultLibrary.go")({ fg = hsl("#CC7832"), gui = "NONE" }),
+		-- - @lsp.type.variable.go links to Identifier priority: 125
+		-- - @lsp.mod.defaultLibrary.go priority: 126
+		-- - @lsp.mod.readonly.go priority: 126
+		-- - @lsp.typemod.variable.defaultLibrary.go priority: 127
+		-- - @lsp.typemod.variable.readonly.go priority: 127
 
 		-- python specific highlight
 		sym("@type.builtin.python")({ fg = hsl("#8888C6") }),
@@ -329,6 +339,7 @@ local theme = lush(function(injected_functions)
 		sym("@parameter.python")({ fg = hsl("#AA4926") }),
 		sym("@method.call.python")({ fg = hsl("#B09D79") }),
 		sym("@function.call.python")({ fg = hsl("#B09D79") }),
+		sym("@string.documentation.python")({ fg = hsl("#5F826B") }),
 
 		-- bash specific
 		sym("@function.builtin.bash")({ fg = hsl("#CC7832") }),
@@ -345,8 +356,8 @@ local theme = lush(function(injected_functions)
 		-- CmpItemKindMethod({ fg = hsl("#C77DBB") }),
 		-- CmpItemKindProperty({ fg = fg, bg = hsl("#C77DBB") }),
 
-		NeoTreeNormal({ bg = hsl("#2b2d30") }),
-		NeoTreeNormalNC({ NeoTreeNormal }),
+		NeoTreeNormal({ bg = d2 }),
+		NeoTreeNormalNC({ bg = d2 }),
 		NeoTreeCursorLine({ bg = hsl("#32436b") }),
 		NeoTreeDirectoryName({ fg = fg }),
 		--  reference https://www.jetbrains.com/help/idea/file-status-highlights.html#86b7a728
@@ -362,7 +373,6 @@ local theme = lush(function(injected_functions)
 		NeoTreeFileIcon({ fg = hsl("#8bcada") }),
 		NeoTreeExpander({ fg = fg.da(10) }),
 		NeoTreeDirectoryIcon({ fg = fg }),
-		NeoTreeIndentMarker({ fg = hsl("#3d3f43").lighten(20) }),
 
 		ExtraWhitespace({ bg = hsl("#66313F") }),
 		AlphaHeader({ fg = hsl("#72D6D6") }),
